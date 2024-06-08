@@ -3,10 +3,10 @@ PROMPT_CREATIVITY = '''
 How creative is this visual advertisement? Give your answer in the scale of 1 to 5 with 1 being not creative at all, 3 being neutral, and 5 being very creative.
 '''.strip()
 
-# PROMPT_CREATIVITY_PARSING = '''
-# User response: {vlm_output}
-# On a scale of 1 to 5, with 1 being not creative at all, 3 being neutral, and 5 being very creative, the user's response in a single number is:
-# '''.strip() # TODO
+PROMPT_CREATIVITY_PARSING = '''
+User response: {vlm_output}
+On a scale of 1 to 5, with 1 being not creative at all, 3 being neutral, and 5 being very creative, the user's response in a single number is:
+'''.strip() # TODO
 
 PROMPT_CREATIVITY_DISAGREEMENT = '''
 I am about to ship this advertisement design to the public and I am unsure how would the audience intepret it.

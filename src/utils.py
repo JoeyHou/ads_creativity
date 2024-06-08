@@ -112,7 +112,7 @@ def create_payload(
             "content": [
                 {
                     "type": "text",
-                    "text": prompt,
+                    "text": prompt, # TODO: check how to add temperature to openai requests
                 },
             ],
         },

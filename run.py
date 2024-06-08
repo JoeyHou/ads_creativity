@@ -135,10 +135,27 @@ class Driver():
     #     pickle.dump(creativity_output_df, open(self.output_dir + 'creativity_output_df.pkl', 'w'))
     #     return creativity_output_df
     
-    ########## BEGING: POST PROCESSING ##########
+
+    ########## BEGING: PREDICTION ##########
+    def vlm_completion(self, image_paths, prompt, temperature = 0.75):
+        if 'gpt' in self.model_path:
+            payload = create_payload(image_paths, prompt)
+            response = query_openai(payload)
+            vlm_output = response['choices'][0]['message']['content']
+            # pred = vlm_output
+        elif 'llava' in self.model_path:
+            vlm_output = self.vlm.generate(prompt, image_paths[0], self.config, temperature)
+            # pred = self.post_processing(vlm_output, task)
+            # pred = vlm_output ## TODO: add parsing here
+        else:
+            raise NotImplementedError
+        return vlm_output
+        
     def post_processing(self, vlm_output, task):
         if task == 'creativity':
             parsing_prompt = PROMPT_CREATIVITY_PARSING.format(vlm_output = vlm_output)
+        elif task == 'creativity_disagreement':
+            parsing_prompt = PROMPT_CREATIVITY_DISAGREEMENT.format(vlm_output = vlm_output)
         else:
             raise NotImplementedError
         
@@ -149,30 +166,6 @@ class Driver():
             print("re.search(r'\d{1}', parsed_output).group(0)", re.search(r'\d{1}', parsed_output).group(0))
             return parsed_output
 
-
-    ########## END: POST PROCESSING ##########
-    
-    ########## BEGING: PREDICTION ##########
-    def vlm_completion(self, image_paths, prompt):
-        if 'gpt' in self.model_path:
-            payload = create_payload(image_paths, prompt)
-            response = query_openai(payload)
-            vlm_output = response['choices'][0]['message']['content']
-            pred = vlm_output
-        elif 'llava' in self.model_path:
-            sample_size = 1 if 'sample_size' not in self.config else self.config['sample_size']
-            if sample_size == 1:
-                temperature = 0.01
-            else:
-                temperature = 0.75
-            vlm_output = self.vlm.generate(prompt, image_paths[0], self.config, temperature)
-            # pred = self.post_processing(vlm_output, task)
-            pred = vlm_output ## TODO: add parsing here
-            
-        else:
-            raise NotImplementedError
-        return pred, vlm_output
-
     def predict_instrinsic_single(self, ads_id, task):
         # print('ads_id:', ads_id)
         sample_size = 1 if 'sample_size' not in self.config else self.config['sample_size']
@@ -180,80 +173,79 @@ class Driver():
         
         # 0. load and prep data 
         image_paths = [mturk_data_dir + 'subset_0.5/' + ads_id]
-        
-        # 1. predict majority label
         if task == 'creativity':
             majority_prompt = PROMPT_CREATIVITY
-        elif task == 'atypicality':
-            majority_prompt = PROMPT_ATYPICALITY
-        elif task == 'originality':
-            majority_prompt = PROMPT_ORIGINALITY
-        else:
-            raise NotImplementedError
-        
-        counter_attempts = 0
-        pred_labels = []
-        while True:
-            pred_label, vlm_output = self.vlm_completion(image_paths, majority_prompt)
-            counter_attempts += 1
-            if "I'm sorry" in vlm_output and counter_attempts <= max_attempt:
-                continue 
-            elif len(pred_labels) < sample_size:
-                pred_labels.append((pred_label, vlm_output))
-            else:
-                break
-        if self.debug:
-            print('total attempts ({}): {}'.format(task, counter_attempts))
-    
-        # # 2. predict average label 
-        # if task == 'creativity':
-        #     average_prompt = PROMPT_CREATIVITY
-        # else:
-        #     raise NotImplementedError
-        # payload = create_payload(image_paths, average_prompt)
-        # response = query_openai(payload)
-        # creativity_prediction_average = response['choices'][0]['message']['content']
-    
-        # 3. predict disagreement
-        if task == 'creativity':
             disagreement_prompt = PROMPT_CREATIVITY_DISAGREEMENT
         elif task == 'atypicality':
+            majority_prompt = PROMPT_ATYPICALITY
             disagreement_prompt = PROMPT_ATYPICALITY_DISAGREEMENT
         elif task == 'originality':
+            majority_prompt = PROMPT_ORIGINALITY
             disagreement_prompt = PROMPT_ORIGINALITY_DISAGREEMENT
         else:
             raise NotImplementedError
-        
+            
+        # 1. predict single label
         counter_attempts = 0
-        pred_disagreements = []
+        pred_labels = []
+        ## 1.1 fix-temerature prediction 
         while True:
-            pred_disagreement, vlm_output = self.vlm_completion(image_paths, majority_prompt)
+            vlm_output_label = self.vlm_completion(image_paths, majority_prompt, temperature = self.config['temperature']['single'])
+            pred_label = self.post_processing(vlm_output_label, task)
             counter_attempts += 1
-            if "I'm sorry" in vlm_output and counter_attempts <= max_attempt:
+            if "I'm sorry" in vlm_output_label and counter_attempts <= max_attempt:
                 continue 
-            elif len(pred_disagreements) < sample_size:
-                pred_disagreements.append((pred_disagreement, vlm_output))
             else:
                 break
         if self.debug:
-            print('total attempts on disagreement ({}): {}'.format(task, counter_attempts))
-            print()
-    
-        # 4. predict distribution
-        ## TODO
-    
+            print('total attempts fix-temerature prediction ({}): {}'.format(task, counter_attempts))
+            
+        ## 1.2 distribution prediction 
+        counter_attempts = 0
+        pred_distribution = []
+        while len(pred_distribution) < sample_size:
+            vlm_output_label = self.vlm_completion(image_paths, majority_prompt, temperature = self.config['temperature']['distribution'])
+            pred_label = self.post_processing(vlm_output_label, task)
+            counter_attempts += 1
+            if "I'm sorry" not in vlm_output_label: 
+                pred_distribution.append((pred_label, vlm_output_label))
+            elif counter_attempts <= max_attempt * sample_size:
+                continue 
+            else:
+                break 
+        if self.debug: print('total attempts distribution prediction  ({}): {}'.format(task, counter_attempts))
+            
+        # 2. predict disagreement
+        counter_attempts = 0
+        # pred_disagreements = []
+        while True:
+            vlm_output_disagreement = self.vlm_completion(image_paths, disagreement_prompt, temperature = self.config['temperature']['single'])
+            pred_disagreement = self.post_processing(vlm_output_disagreement, task + '_disagreement')
+            counter_attempts += 1
+            if "I'm sorry" in vlm_output_disagreement and counter_attempts <= max_attempt:
+                continue 
+            else:
+                # pred_disagreements.append((pred_disagreement, vlm_output))
+                break
+        if self.debug: print('total attempts on disagreement ({}): {}'.format(task, counter_attempts))
+
         return {
-            # 'creativity_majority': creativity_prediction,
-            'labels': pred_labels,
-            'disagreements': pred_disagreements
+            'labels': (pred_label, vlm_output_label),
+            'label_distribution': pred_distribution,
+            'disagreements': (pred_disagreement, vlm_output_disagreement)
         }
     def predict_batch(self):
 
         ## Instrinsic ## 
         counter = 0
-        debug_size = self.intrinsic_data.shape[0] if 'debug_size' not in self.config else config['debug_size']
+        debug_size = 0 if 'debug_size' not in self.config else config['debug_size']
+        if debug_size == 0: debug_size = self.intrinsic_data.shape[0]
         vlm_predictions = []
-        intrinsic_task_lst = ["creativity", "atypicality", "originality"]
+        intrinsic_task_lst = [
+            "creativity",
+            "atypicality", 
+            "originality"
+        ]
         for i in tqdm(range(self.intrinsic_data.shape[0])):
             ads_id = self.intrinsic_data.iloc[i]['ads_id']
             for task in intrinsic_task_lst:
@@ -265,7 +257,7 @@ class Driver():
         vlm_pred_df = pd.DataFrame(vlm_predictions)
         vlm_pred_df.to_csv(self.output_dir + 'vlm_pred_df.csv', index = False)
         # print(disagreement_output_df)
-        pickle.dump(vlm_pred_df, open(self.output_dir + 'vlm_pred_df.pkl', 'w'))
+        pickle.dump(vlm_pred_df, open(self.output_dir + 'vlm_pred_df.pkl', 'wb'))
         return vlm_pred_df
 
         ## Pairwise ## 

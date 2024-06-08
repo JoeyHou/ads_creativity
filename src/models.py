@@ -20,6 +20,7 @@ class LLaVA_VLM:
                 device_map='auto'
             )
             self.processor = LlavaNextProcessor.from_pretrained(model_path)
+            self.tokenizer = AutoTokenizer.from_pretrained(model_path)
         else:
             self.model = LlavaForConditionalGeneration.from_pretrained(
                 model_path,
@@ -39,14 +40,15 @@ class LLaVA_VLM:
         
         image = Image.open(image_path)
         inputs = self.processor(system_prompt, image, return_tensors="pt").to('cuda')
-        # inputs = processor(text=prompt, images=image, return_tensors="pt")
+        # inputs = self.processor(text=prompt, images=image, return_tensors="pt")
         
         # Generate
         generate_ids = self.model.generate(
             **inputs, 
             max_new_tokens=100,
             temperature=temperature,
-            do_sample=do_sample
+            do_sample=do_sample,
+            pad_token_id=self.tokenizer.eos_token_id
         )
         result = self.processor.batch_decode(
             generate_ids, 

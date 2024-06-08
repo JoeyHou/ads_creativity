@@ -1,0 +1,13 @@
+{
+    "task": "predict_disagreement",
+    "data_path": "./data/mturk_data/subset_0.5/",
+    "load_in_8bit": true,
+    "model_path": "llava-hf/llava-v1.6-vicuna-13b-hf",
+    "sample_size": 25,
+    "debug": true,
+    "debug_size": 0,
+    "temperature": {
+        "single": 0.001,
+        "distribution": 0.75
+    }
+}
