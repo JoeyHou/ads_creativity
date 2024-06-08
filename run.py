@@ -258,7 +258,7 @@ class Driver():
             ads_id = self.intrinsic_data.iloc[i]['ads_id']
             for task in intrinsic_task_lst:
                 vlm_pred = self.predict_instrinsic_single(ads_id, task)
-                vlm_pred['true'] = data.iloc[i][task + '_average']
+                vlm_pred['true'] = self.intrinsic_data.iloc[i][task + '_average']
             vlm_predictions.append(vlm_pred)
             counter += 1
             if counter >= debug_size: break
