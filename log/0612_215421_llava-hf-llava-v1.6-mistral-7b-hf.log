@@ -1,0 +1,380 @@
+2024-06-12 21:54:21,315 {'task': 'predict_disagreement', 'data_path': './data/mturk_data/subset_0.5/', 'load_in_8bit': True, 'model_path': 'llava-hf/llava-v1.6-mistral-7b-hf', 'sample_size': 5, 'debug': True, 'debug_size': 5, 'temperature': {'single': 0.001, 'distribution': 0.75}, 'save_results': True, 'prompt_tuning': True, 'output_dir': 'data/outputs/', 'task_list': ['creativity', 'atypicality', 'originality'], 'pairwise_threshold': 0.5, 'intrinsic': True, 'pairwise': True}
+2024-06-12 21:54:46,632 ========================= [DEBUG] ads_id: 0/100080.jpg =========================
+2024-06-12 21:54:46,632 ads_id: 0/100080.jpg; task: atypicality
+2024-06-12 21:55:07,485 => single label prediction (fixed-temperature): 1
+2024-06-12 21:55:07,486 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The advertisement is unusual because it features two different fantasy games, Ultima II and Ultima I, which are not typically advertised together. This is because they are part of the same series, and it is not common to see two different games from the same series advertised together in the same advertisement. Additionally, the advertisement includes a picture of a person holding a gun, which is not a typical image for a fantasy game advertisement. 
+2024-06-12 21:55:07,486 => total attempts fix-temerature prediction (atypicality): 1
+2024-06-12 21:55:07,486 
+
+
+2024-06-12 21:57:20,279 distribution prediction
+2024-06-12 21:57:20,279 => label prediction: 0
+2024-06-12 21:57:20,279 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement shows two games, Ultima II and Ultima IV, and features a normal depiction of characters from the game, along with a castle and a dragon. The text mentions that the games are available for the Apple computer and are now available for the Atari. There is nothing abnormal or unusual about the advertisement. 
+2024-06-12 21:57:20,279 => label prediction: 1
+2024-06-12 21:57:20,279 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+Answer: 1; explanation: The advertisement features two video games: The Ultimate and Ultima II. This suggests that the Ultimate is an earlier version of Ultima II, which is unusual since video games don't typically have multiple versions. Additionally, the text on the image says "Now Available for The Atari," which implies that The Ultimate is available for Atari consoles, but since Ultima II was released for other platforms, this is also atypical. 
+2024-06-12 21:57:20,279 => label prediction: 0
+2024-06-12 21:57:20,279 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is for the Ultima series, which is a popular role-playing game. It features a character using a sword, a fantasy scene with a castle, and a large spider. These elements are typical for a fantasy game advertisement and are consistent with the themes of the Ultima series. 
+2024-06-12 21:57:20,279 => label prediction: 1
+2024-06-12 21:57:20,279 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The advertisement features an illustration of a game with a man and a bird, but it also includes the phrase "the ultimate in fantasy" which can be considered unusual for a video game advertisement, as it suggests an extreme and unrealistic level of fantasy element in the game. 
+2024-06-12 21:57:20,279 => label prediction: 1
+2024-06-12 21:57:20,279 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The advertisement has a very unusual and abnormal design, featuring dark, ominous colors and featuring a large dragon and a man in a red and black outfit, which are not typically associated with an advertisement for a game. The use of the word "ultimate" and "in fantasy" further adds to the fantastical and unusual theme of the advertisement. 
+2024-06-12 21:57:20,279 => total attempts distribution prediction  (atypicality): 7
+2024-06-12 21:57:20,279 
+
+
+2024-06-12 21:57:48,900 => pred_disagreement: 0
+2024-06-12 21:57:48,900 => vlm_output_disagreement: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement design features two distinct images of Ultima II, which are likely to be interpreted differently by different individuals. Some might focus on the fantasy elements, such as the dragon and the castle, while others might focus on the computer graphics and the gameplay. The design also includes text that provides information about the game, which could be considered unusual by some. However, since the design is intended for an audience interested in video games, it is likely that most people would agree on the main message of the advertisement, which is to promote Ultima II. Therefore, the agreement score would be 0, indicating a high level of agreement among the audience. 
+2024-06-12 21:57:48,900 => total attempts on disagreement (atypicality): 1
+2024-06-12 21:57:48,900 
+
+
+2024-06-12 21:57:48,904 ========================= [DEBUG] ads_id: 0/100790.jpg =========================
+2024-06-12 21:57:48,904 ads_id: 0/100790.jpg; task: atypicality
+2024-06-12 21:58:04,670 => single label prediction (fixed-temperature): 1
+2024-06-12 21:58:04,670 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The advertisement is unusual because it features a human leg with a shackle around the ankle, which is not a typical image for a nutrition advertisement. The shackle is often associated with imprisonment or restraint, which is not a positive connotation for a product that is meant to promote health and well-being. 
+2024-06-12 21:58:04,670 => total attempts fix-temerature prediction (atypicality): 1
+2024-06-12 21:58:04,670 
+
+
+2024-06-12 21:59:27,140 distribution prediction
+2024-06-12 21:59:27,140 => label prediction: 1
+2024-06-12 21:59:27,140 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The image depicts a person's leg with a large cuff around it, which is unusual and atypical connotations, as it is not a typical image one would expect to see in an advertisement. 
+2024-06-12 21:59:27,140 => label prediction: 1
+2024-06-12 21:59:27,140 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The advertisement shows a person with a shackle around their ankle, which is an unusual and potentially disturbing image as it may imply a negative connotation or a violation of human rights. 
+2024-06-12 21:59:27,140 => label prediction: 1
+2024-06-12 21:59:27,140 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: This advertisement is unusual because it features an anatomically incorrect depiction of a human leg with an object locked around it. This object appears to be a metal bracelet or similar device attached to the leg, which is not a typical accessory and raises questions about its purpose and how it is being worn. The advertisement's message, "Free Your Joints. Life Nutrition," is also puzzling, as it does not directly relate to the visual content and the image of the device attached to the leg with a chain is not a common sight. 
+2024-06-12 21:59:27,140 => label prediction: 0
+2024-06-12 21:59:27,140 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 0; explanation: The advertisement shows a woman's legs, calf, and ankle with a chain, but it seems to be a typical advertisement for a product that involves physical health or nutrition. The presence of a chain around the ankle could be seen as unusual, but it is likely related to the product being advertised. However, without more context or information, it is difficult to determine the exact nature of the advertisement and its intentions. 
+2024-06-12 21:59:27,140 => label prediction: 1
+2024-06-12 21:59:27,140 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The image is unusual because it depicts a leg with a shackle around it, which is not a typical scene in everyday life or in a typical advertisement. The shackle is an abnormal object, and the connotation of a restrained leg could be interpreted as abnormal or negative, which is not typical for an advertisement. 
+2024-06-12 21:59:27,140 => total attempts distribution prediction  (atypicality): 5
+2024-06-12 21:59:27,140 
+
+
+2024-06-12 21:59:45,606 => pred_disagreement: 0
+2024-06-12 21:59:45,606 => vlm_output_disagreement: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement design features a human leg with a cuff around the ankle, which is an unusual and potentially alarming sight. This could lead to a wide range of interpretations and reactions, with some people finding it unsettling or even offensive. As a result, it is unlikely that there would be a high level of agreement among the audience regarding the advertisement's content or message. 
+2024-06-12 21:59:45,606 => total attempts on disagreement (atypicality): 1
+2024-06-12 21:59:45,606 
+
+
+2024-06-12 21:59:45,609 ========================= [DEBUG] ads_id: 0/10200.jpg =========================
+2024-06-12 21:59:45,609 ads_id: 0/10200.jpg; task: atypicality
+2024-06-12 21:59:54,685 => single label prediction (fixed-temperature): 0
+2024-06-12 21:59:54,685 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 0; explanation: The advertisement is a typical beer advertisement featuring a woman holding a beer bottle. The image is not unusual, as it is a common way to advertise beer. 
+2024-06-12 21:59:54,685 => total attempts fix-temerature prediction (atypicality): 1
+2024-06-12 21:59:54,685 
+
+
+2024-06-12 22:01:14,035 distribution prediction
+2024-06-12 22:01:14,036 => label prediction: 0
+2024-06-12 22:01:14,036 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 0; explanation: The advertisement is a vintage advertisement for Blatz Beer, a brewery located in Milwaukee. It features a woman in a red and white striped shirt holding a bottle of beer, which is a typical marketing approach to promote the product. There are no unusual or abnormal objects, and the connotation of beer being associated with a woman is not necessarily unusual. The ad aims to attract attention to the beer and the brewery by using a visually appealing image of a woman holding a beer bottle. 
+2024-06-12 22:01:14,036 => label prediction: 1
+2024-06-12 22:01:14,036 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The advertisement is unusual because it features a woman holding a bottle of beer inside a giant hoop. This is an atypical connotation as beer is not a common item to be showcased in a giant hoop, nor is it an item one would expect to see in such an exaggerated fashion. 
+2024-06-12 22:01:14,036 => label prediction: 1
+2024-06-12 22:01:14,036 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+Answer: 1; explanation: The advertisement features an oddly shaped round mirror in which the woman holds a bottle of beer, which is not a typical object associated with wine or beer advertisements. 
+2024-06-12 22:01:14,036 => label prediction: 1
+2024-06-12 22:01:14,036 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The advertisement is unusual because it features a woman in a red and white striped dress holding a beer bottle. This is atypical because beer is traditionally associated with men, and it is less common to see women prominently featured in beer advertisements. 
+2024-06-12 22:01:14,036 => label prediction: 1
+2024-06-12 22:01:14,036 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+Answer: 1; explanation: In the advertisement, the woman is holding a bottle of beer in one hand and a mirror in the other. This is unusual because it is not common for people to hold a mirror while holding a beer bottle. Additionally, a woman with red lipstick is also presented, which is not a regular part of beer advertisements. These atypical elements make the advertisement stand out from typical beer advertisements. 
+2024-06-12 22:01:14,036 => total attempts distribution prediction  (atypicality): 5
+2024-06-12 22:01:14,036 
+
+
+2024-06-12 22:01:47,445 => pred_disagreement: 0
+2024-06-12 22:01:47,446 => vlm_output_disagreement: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement features a woman holding a beer bottle, which is a common and expected object in a beer advertisement. The woman is also holding a mirror, which is an unusual object in a beer advertisement. However, the presence of the mirror might be interpreted as a creative or artistic element, rather than an abnormal connection. The audience's interpretation of the advertisement would likely be influenced by their personal tastes and preferences, as well as their familiarity with beer advertisements. Some might find the combination of the beer bottle and the mirror to be an interesting and unique design, while others might not. Ultimately, the level of agreement on the advertisement's interpretation would likely be low, as people's opinions on the advertisement's design would vary widely. 
+2024-06-12 22:01:47,446 => total attempts on disagreement (atypicality): 1
+2024-06-12 22:01:47,446 
+
+
+2024-06-12 22:01:47,449 ========================= [DEBUG] ads_id: 0/104190.jpg =========================
+2024-06-12 22:01:47,449 ads_id: 0/104190.jpg; task: atypicality
+2024-06-12 22:02:05,896 => single label prediction (fixed-temperature): 0
+2024-06-12 22:02:05,896 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is a typical advertisement for Nestle Pure Life, featuring a man holding a bottle of water and a child in the background. It includes the company's logo, the product name, and a phone number for free delivery. The advertisement is designed to promote the product and its commitment to serving better, which aligns with the company's branding and marketing strategy. 
+2024-06-12 22:02:05,896 => total attempts fix-temerature prediction (atypicality): 1
+2024-06-12 22:02:05,896 
+
+
+2024-06-12 22:04:16,448 distribution prediction
+2024-06-12 22:04:16,448 => label prediction: 0
+2024-06-12 22:04:16,448 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is typical and does not contain any unusual elements or atypical connotations. It features a bottle of Nestle Pure Life water in the foreground and two people in the background. The overall presentation is clean, professional, and in line with the brand's image. 
+2024-06-12 22:04:16,448 => label prediction: 0
+2024-06-12 22:04:16,448 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 0; explanation: The advertisement is a standard Nestle beverage advertisement, with a picture of a man holding a beverage bottle, children playing, and a catchy message at the bottom. While it may not be completely unique, there are no obvious unusual objects or atypical connotations that could be discerned. 
+2024-06-12 22:04:16,448 => label prediction: 0
+2024-06-12 22:04:16,448 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is not unusual. It appears to be a typical advertisement for a service with imagery and text that are commonly used in such advertisements. The product being advertised is the "Nestle Pure Life" water product, which is a recognizable brand, and the advertisement includes a man holding a large bottle of water, a child, and a woman. These elements are all part of a standard advertisement for a product. The design of the advertisement is also not unusual, as it uses a combination of blue and pink coloring, which is a common color scheme for advertisements. 
+2024-06-12 22:04:16,448 => label prediction: 1
+2024-06-12 22:04:16,448 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 1; explanation: The advertisement features a man and a boy holding a Nestle Pure Life water jug. There is nothing particularly unusual about the image; it shows a man and a boy with a product, which is typical for a product advertising. However, the phone number featured on the advertisement is "111-123-333," which is an unusual and perhaps humorous choice. The use of such an unconventional phone number could be considered unusual in the context of an advertisement. 
+2024-06-12 22:04:16,448 => label prediction: 0
+2024-06-12 22:04:16,448 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement contains a mix of typical and not-so-typical elements. On one hand, it features a man holding a water bottle, which is a common visual for an advertisement about water. On the other hand, the presence of the "Pure Life" bottle and the accompanying text, emphasizing the commitment to serving better, may require a closer analysis to determine its unusualness. However, considering the overall content and layout of the advertisement, it does not appear to be significantly unusual. 
+2024-06-12 22:04:16,448 => total attempts distribution prediction  (atypicality): 6
+2024-06-12 22:04:16,448 
+
+
+2024-06-12 22:04:38,689 => pred_disagreement: 0
+2024-06-12 22:04:38,689 => vlm_output_disagreement: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement design features a man holding a Nestle Pure Life water bottle, which is a common and expected object in such an advertisement. The presence of a child and a delivery person also adds to the typical representation of a family or a household. The design is well-balanced and does not contain any unusual or abnormal objects or connections. The audience is likely to agree on the interpretation of the advertisement, as it accurately represents the intended message of the advertisement. 
+2024-06-12 22:04:38,689 => total attempts on disagreement (atypicality): 1
+2024-06-12 22:04:38,689 
+
+
+2024-06-12 22:04:38,692 ========================= [DEBUG] ads_id: 0/10430.jpg =========================
+2024-06-12 22:04:38,692 ads_id: 0/10430.jpg; task: atypicality
+2024-06-12 22:04:48,672 => single label prediction (fixed-temperature): 0
+2024-06-12 22:04:48,672 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is a typical beer advertisement with a bottle of beer in the center and a slogan at the top. It does not contain any unusual or abnormal objects or connotations. 
+2024-06-12 22:04:48,672 => total attempts fix-temerature prediction (atypicality): 1
+2024-06-12 22:04:48,672 
+
+
+2024-06-12 22:05:55,909 distribution prediction
+2024-06-12 22:05:55,909 => label prediction: 0
+2024-06-12 22:05:55,909 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement is a typical advertisement for beer. It features a bottle of beer in a green background, along with a text message. There are no unusual, atypical, or abnormal objects or connotations in the advertisement, making it very normal in terms of advertising standards. 
+2024-06-12 22:05:55,909 => label prediction: 0
+2024-06-12 22:05:55,909 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+answer: 0; explanation: The advertisement is a typical beer advertisement with a green background and a bottle of beer prominently displayed. 
+2024-06-12 22:05:55,909 => label prediction: 0
+2024-06-12 22:05:55,909 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advert is for Heineken, a well-known beer brand. Fridge stuffer is a humorous play on words, using the beer bottle as a common household item. The ad is not unusual, as it features a typical beer bottle and employs a clever pun to get attention, which is a common advertising strategy. 
+2024-06-12 22:05:55,909 => label prediction: 1
+2024-06-12 22:05:55,909 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The advertisement is unusual because it features a bottle of beer, which is a normal object, but it uses the slogan "Fridge stuffer" as part of its advertising, which is an atypical connotation. This is unusual because beer is typically consumed, not used as a "stuffer" for a refrigerator. 
+2024-06-12 22:05:55,909 => label prediction: 0
+2024-06-12 22:05:55,909 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement features a bottle of beer, which is a common object in advertisements for alcoholic beverages. The text "Fridge stuffer" is a typical and well-known connotation for beer in various advertising contexts. There are no abnormal objects or atypical connotations in this advertisement. 
+2024-06-12 22:05:55,909 => total attempts distribution prediction  (atypicality): 5
+2024-06-12 22:05:55,909 
+
+
+2024-06-12 22:06:15,494 => pred_disagreement: 0
+2024-06-12 22:06:15,494 => vlm_output_disagreement: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 0; explanation: The advertisement features a bottle of Heineken beer with a bow on it, which is an unusual connection. However, the context of the advertisement is not provided, so it is unclear what the bow represents or how it relates to the product. Without additional information, it is difficult to predict how the audience would interpret the advertisement. The lack of context makes it impossible to determine the level of agreement among the audience. 
+2024-06-12 22:06:15,494 => total attempts on disagreement (atypicality): 1
+2024-06-12 22:06:15,494 
+
+
+2024-06-12 22:06:15,498 ads_id: 0/100080.jpg, 0/100790.jpg; task: atypicality_pairwise
+2024-06-12 22:06:29,282 => true: 2
+2024-06-12 22:06:29,282 => pred: 2
+2024-06-12 22:06:29,282 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 2; explanation: The right image is more abnormal and unusual because it features a person's leg with a foot in a high heel shoe, which is not a typical image for an advertisement. The left image, on the other hand, is a more typical advertisement with a fantasy theme. 
+2024-06-12 22:06:29,282 
+
+
+2024-06-12 22:06:29,286 ads_id: 0/100080.jpg, 0/104190.jpg; task: atypicality_pairwise
+2024-06-12 22:06:39,533 => true: 2
+2024-06-12 22:06:39,533 => pred: 1
+2024-06-12 22:06:39,533 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The left advertisement features a fantasy theme with a knight and a castle, which is more unusual and abnormal compared to the right advertisement, which is a typical advertisement for a product. 
+2024-06-12 22:06:39,533 
+
+
+2024-06-12 22:06:39,537 ads_id: 0/100080.jpg, 0/107020.jpg; task: atypicality_pairwise
+2024-06-12 22:07:30,344 => true: 2
+2024-06-12 22:07:30,344 => pred: 2
+2024-06-12 22:07:30,344 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 2; explanation: The right image is more abnormal and unusual because it features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the other hand, features a person playing soccer in a field with a castle in the background, which is an unusual combination. The left image, on the
+2024-06-12 22:07:30,344 
+
+
+2024-06-12 22:07:30,347 ads_id: 0/100080.jpg, 0/107550.jpg; task: atypicality_pairwise
+2024-06-12 22:07:45,847 => true: 2
+2024-06-12 22:07:45,847 => pred: 1
+2024-06-12 22:07:45,847 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The left image is more abnormal and unusual because it features a fantasy theme with a castle, a knight, and a dragon, which are not typical elements found in advertisements. The right image, on the other hand, has a more straightforward design with a green background and a map, which is more common in advertisements. 
+2024-06-12 22:07:45,847 
+
+
+2024-06-12 22:07:45,850 ads_id: 0/100080.jpg, 0/107820.jpg; task: atypicality_pairwise
+2024-06-12 22:08:02,767 => true: 2
+2024-06-12 22:08:02,767 => pred: 2
+2024-06-12 22:08:02,767 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 2; explanation: The right image is more abnormal and unusual because it features a car with a plane on top of it, which is an unconventional and surreal combination. This is not a typical scene one would expect to see in an advertisement, making it more unusual than the left image, which depicts a more conventional scene with a castle and a knight. 
+2024-06-12 22:08:02,767 
+
+
+2024-06-12 22:08:02,770 ads_id: 0/100080.jpg, 0/107890.jpg; task: atypicality_pairwise
+2024-06-12 22:08:19,306 => true: 2
+2024-06-12 22:08:19,306 => pred: 1
+2024-06-12 22:08:19,306 => vlm_output: <|im_start|>system
+Answer the questions.<|im_end|><|im_start|>user
+ 
+<|im_end|><|im_start|>assistant
+
+answer: 1; explanation: The left image features a fantasy theme with a castle and a dragon, which is more unusual and abnormal compared to the right image, which shows a woman with a tattoo on her arm. The fantasy theme in the left image is not something one would typically see in an advertisement, whereas the tattoo is a more common and accepted form of self-expression. 
+2024-06-12 22:08:19,306 
+
+

@@ -3,7 +3,7 @@
     "data_path": "./data/mturk_data/subset_0.5/",
     "load_in_8bit": true,
     "model_path": "gpt4",
-    "sample_size": 25,
+    "sample_size": 5,
     "debug": false,
     "debug_size": 5,
     "temperature": {
@@ -13,6 +13,8 @@
     "save_results": true,
     "prompt_tuning": false,
     "output_dir": "data/outputs/",
-    "task_list": ["atypicality", "creativity", "originality"],
-    "pairwise_threshold": 1
+    "task_list": ["creativity", "atypicality", "originality"],
+    "pairwise_threshold": 0.5,
+    "intrinsic": true,
+    "pairwise": false
 }

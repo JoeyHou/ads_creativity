@@ -1,9 +1,13 @@
 import json
 import jsonlines
-# import os
-# import openai
-# import time
 from datetime import datetime
+from pprint import pprint
+import base64
+import mimetypes
+import os
+import requests
+import sys
+from PIL import Image
 
 def load_txt_prompt(filename):
     """
@@ -103,7 +107,8 @@ def create_payload(
         prompt: str, 
         model="gpt-4-vision-preview", 
         max_tokens=300, 
-        detail="high"
+        detail="high",
+        temperature=0.75
     ):
     """Creates the payload for the API request."""
     messages = [
@@ -112,6 +117,7 @@ def create_payload(
             "content": [
                 {
                     "type": "text",
+                    "temperature": temperature,
                     "text": prompt, # TODO: check how to add temperature to openai requests
                 },
             ],
@@ -135,7 +141,7 @@ def create_payload(
     }
 
 
-def query_openai(payload):
+def query_openai(payload, api_key):
     """Sends a request to the OpenAI API and prints the response."""
     headers = {
         "Content-Type": "application/json",
@@ -143,3 +149,34 @@ def query_openai(payload):
     }
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
     return response.json()
+
+
+def resize_image(image, base_height):
+    # base_width = image
+    # img = Image.open('somepic.jpg')
+    h_percent = (base_height / float(image.size[1]))
+    w_size = int( (float(image.size[0]) * float(h_percent)) )
+    image = image.resize((w_size, base_height), Image.Resampling.LANCZOS)
+    return image
+
+def merge_images(image_paths):
+    images = [
+        Image.open(x) for x in image_paths
+    ]
+    # min_width = min([img.size[0] for img in images])
+    min_height = int(min([img.size[1] for img in images]))
+    # im1.resize(newsize)
+    images = [resize_image(img, min_height) for img in images]
+    
+    widths, heights = zip(*(i.size for i in images))
+    
+    total_width = sum(widths)
+    max_height = max(heights)
+    
+    new_im = Image.new('RGB', (total_width, max_height))
+    
+    x_offset = 0
+    for im in images:
+        new_im.paste(im, (x_offset,0))
+        x_offset += im.size[0]
+    return new_im
