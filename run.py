@@ -115,59 +115,6 @@ class Driver():
             }
     ########## END: INITIALIZATION ##########
     
-    # def predict_sampling(self, ads_id, task):
-    #     image_path = data_dir + 'original_data/' + ads_id
-    #     sample_size = 1 if 'sample_size' not in self.config else self.config['sample_size']
-    #     if sample_size == 1:
-    #         temperature = 0.01
-    #     else:
-    #         temperature = 0.75
-    #     if task == 'creativity':
-    #         prompt = PROMPT_CREATIVITY
-    #     elif task == 'atypicality':
-    #         prompt = PROMPT_ATYPICALITY
-    #     else:
-    #         raise NotImplementedError
-        
-    #     all_pred = []
-    #     all_vlm_outputs = []
-    #     counter = 0
-    #     while len(all_pred) < sample_size:
-    #         vlm_output = self.vlm.generate(prompt, image_path, self.config, temperature)
-    #         prediction = self.post_processing(vlm_output, task)
-    #         counter += 1
-    #         if counter > sample_size * 2: break # stop when success rate is < 50%
-    #         if isinstance(prediction, str): continue 
-    #         all_pred.append(prediction)
-    #         all_vlm_outputs.append(vlm_output)
-    #     vlm_prediction = {
-    #         'task': task,
-    #         'ads_id': ads_id,
-    #         'pred': all_pred,
-    #         'vlm_output': all_vlm_outputs
-    #     }
-    #     return vlm_prediction
-            
-    # def predict_creativity(self, data):
-       
-    #     counter = 0
-    #     vlm_predictions = []
-        
-    #     for i in tqdm(range(data.shape[0])):
-    #         ads_id = data.iloc[i].name 
-    #         vlm_pred = self.predict_sampling(ads_id, 'creativity')
-    #         true = data.iloc[i]['majority_dista']
-    #         vlm_pred['true'] = true
-    #         # print(vlm_pred)
-    #         vlm_predictions.append(vlm_pred)
-    #         counter += 1
-    #         # if counter >= 3: break
-    #     creativity_output_df = pd.DataFrame(vlm_predictions)
-    #     creativity_output_df.to_csv(self.output_dir + 'creativity_output_df.csv', index = False)
-    #     # print(disagreement_output_df)
-    #     pickle.dump(creativity_output_df, open(self.output_dir + 'creativity_output_df.pkl', 'w'))
-    #     return creativity_output_df
-    
 
     ########## BEGING: PREDICTION ##########
     def vlm_completion(self, image_paths, prompt, temperature = 0.75):
@@ -197,44 +144,12 @@ class Driver():
         else:
             return '[PARSING FAILED]\n' + parsed_output
 
-        
-        # if 'pairwise' in task:
-        #     # parsing_prompt = PROMPT_PAIRWISE_PARSING.format(vlm_output = vlm_output)
-        #     if 'creativity' in task:
-        #         parsing_prompt = PROMPT_CREATIVITY_PAIRWISE_PARSING.format(vlm_output = vlm_output)
-        #     elif 'atypicality' in task:
-        #         parsing_prompt = PROMPT_ATYPICALITY_PAIRWISE_PARSING.format(vlm_output = vlm_output)
-        #     elif 'originality' in task:
-        #         parsing_prompt = PROMPT_ORIGINALITY_PAIRWISE_PARSING.format(vlm_output = vlm_output)
-        #     else:
-        #         raise NotImplementedError
-        #     # if self.debug:
-        #     #     print('=> using parsing prompt!')
-        #     #     print(parsing_prompt, '\n\n')
-        # elif 'disagreement' in task:
-        #     parsing_prompt = PROMPT_DISAGREEMENT_PARSING.format(vlm_output = vlm_output)
-        # else:
-        #     if task == 'creativity':
-        #         parsing_prompt = PROMPT_CREATIVITY_PARSING.format(vlm_output = vlm_output)
-        #     elif task == 'atypicality':
-        #         parsing_prompt = PROMPT_ATYPICALITY_PARSING.format(vlm_output = vlm_output)
-        #     elif task == 'originality':
-        #         parsing_prompt = PROMPT_ORIGINALITY_PARSING.format(vlm_output = vlm_output)
-        #     else:
-        #         raise NotImplementedError
-        # parsed_output = self.parsing_model.parse(parsing_prompt)
-        # if self.debug:
-        #     print('=> parsed_output:', parsed_output)
-        # try:
-        #     return int(re.search(r'\d{1}', parsed_output).group(0))
-        # except:  
-        #     # print("re.search(r'\d{1}', parsed_output).group(0)", re.search(r'\d{1}', parsed_output).group(0))
-        #     return '[PARSING FAILED]\n' + parsed_output
-
     def predict_instrinsic_single(self, ads_id, task):
         self.logger.warning('ads_id: ' + ads_id + '; task: ' + task)
         # sample_size = 1 if 'sample_size' not in self.config else self.config['sample_size']
-        if self.debug:
+        if self.use_original_atypicality:
+            sample_size = 3
+        elif self.debug:
             sample_size = 5
         else:
             sample_size = 25
@@ -394,7 +309,7 @@ class Driver():
             # vlm_predictions = []
             instrinsic_pred = {task: [] for task in self.task_list}
             for i in tqdm(range(self.intrinsic_data.shape[0])):
-                # if i < 165: continue
+                # if i == 0: continue
                 ads_id = self.intrinsic_data.iloc[i]['ads_id']
                 self.logger.warning('========================= [DEBUG] ads_id: ' + ads_id + ' =========================')
                 for task in self.task_list:
@@ -421,17 +336,40 @@ class Driver():
             pairwise_pred = {task: [] for task in self.task_list}
             for task in self.task_list:
                 counter = 0
-                if self.use_original_atypicality: self.pairwise_data[task].sample(frac=1).reset_index(drop=True)
-                for i in tqdm(range(self.pairwise_data[task].shape[0])):
+                skip_counter = 0
+                if self.use_original_atypicality: 
+                    self.pairwise_data[task].sample(frac=1).reset_index(drop=True)
+
+                # first, get the list of ad id pairs
+                ads_id_pairs = []
+                for i in range(self.pairwise_data[task].shape[0]):
+                    if 'existing_ads_ids' in self.config and self.config['existing_ads_ids'] != '':
+                        existing_data = pickle.load(open(self.config['existing_ads_ids'], 'rb'))
+                        existing_ads_ids = [pred['ads_ids'] for pred in existing_data['pairwise']['atypicality']]
+                    else:
+                        existing_ads_ids = []
+                    
                     ads_id_1, ads_id_2 = self.pairwise_data[task]['ads_pair'].values[i].split(', ')
+                    if tuple([ads_id_1, ads_id_2]) in existing_ads_ids or tuple([ads_id_2, ads_id_1]) in existing_ads_ids: 
+                        skip_counter += 1
+                        # counter += 1
+                        continue 
                     target = self.pairwise_data[task][task + '_average_diff'].values[i]
-                    if abs(target) < self.pairwise_threshold: continue 
+                    if abs(target) < self.pairwise_threshold: 
+                        continue 
+                        
+                    ads_id_pairs.append((ads_id_1, ads_id_2, i))
+
+                self.logger.warning('===== Pairwise task: {}, count: {}, skipped: {} ====='.format(task, len(ads_id_pairs), skip_counter))
+                for (ads_id_1, ads_id_2, i) in tqdm(ads_id_pairs):
+                    target = self.pairwise_data[task][task + '_average_diff'].values[i]
                     vlm_pred = self.predict_pairwise_single(ads_id_1 = ads_id_1, ads_id_2 = ads_id_2, task = task + '_pairwise')
                     vlm_pred['true'] = target
                     target_label = 1 if target > 0 else 2
                     self.logger.warning('=> true: ' + str(target_label))
                     self.logger.warning('=> pred: ' + str(vlm_pred['labels'][0]))
                     self.logger.warning('=> vlm_output: ' + str(vlm_pred['labels'][1]))
+                    # self.logger.warning('=> skip_counter: ' + str(skip_counter))
                     self.logger.warning('\n\n')
                     pairwise_pred[task].append(vlm_pred)
 
