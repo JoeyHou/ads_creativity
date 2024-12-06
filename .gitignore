@@ -6,7 +6,8 @@ data/outputs/
 data/mturk_data/*
 src/archived/
 log/*
-
+test_new_vlm.py
+archived/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
