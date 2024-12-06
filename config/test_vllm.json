@@ -1,0 +1,19 @@
+{
+    "task": "test_vllm_v01",
+    "data_path": "./data/mturk_data/subset_0.5/",
+    "load_in_8bit": true,
+    "model_path": "llava-hf/llava-v1.6-vicuna-13b-hf",
+    "sample_size": 25,
+    "debug": false,
+    "debug_size": 5,
+    "temperature": {
+        "single": 0.01,
+        "distribution": 0.75
+    },
+    "save_results": true,
+    "prompt_tuning": false,
+    "output_dir": "data/outputs/",
+    "task_list": ["atypicality", "creativity", "originality"],
+    "pairwise_threshold": 0.5,
+    "use_vllm": true
+}

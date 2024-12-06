@@ -1,0 +1,20 @@
+{
+    "data_path": "./data/mturk_data/subset_0.5/",
+    "load_in_8bit": true,
+    "model_path": "gpt4",
+    "debug": false,
+    "debug_size": 5,
+    "temperature": {
+        "single": 0.001,
+        "distribution": 0.75
+    },
+    "save_results": true,
+    "use_original_atypicality": true,
+    "use_original_atypicality_limit": 1000,
+    "output_dir": "data/outputs/",
+    "task_list": ["creativity", "atypicality", "originality"],
+    "pairwise_threshold": 0.5,
+    "intrinsic": false,
+    "pairwise": true,
+    "existing_ads_ids": "./data/outputs/pickles/batch_pred_gpt4_0612_224413.pkl"
+}

@@ -1,6 +1,10 @@
 ## Customized ##
 cache/*
-
+setup.sh
+data/original_data/
+data/outputs/
+src/archived/
+log/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
