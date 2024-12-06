@@ -3,8 +3,10 @@ cache/*
 setup.sh
 data/original_data/
 data/outputs/
+data/mturk_data/*
 src/archived/
 log/*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
